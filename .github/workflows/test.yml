@@ -4,6 +4,10 @@ on:
     branches:
       - master
   pull_request:
+
+permissions:
+  contents: read
+
 jobs:
   # Build, vet, and run the whole suite with the race detector across the
   # supported Go floor + latest, on Linux and macOS. Windows is intentionally
@@ -19,8 +23,8 @@ jobs:
         go: ['1.20', 'stable']
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
+      - uses: actions/checkout@v6
+      - uses: actions/setup-go@v7
         with:
           go-version: ${{ matrix.go }}
       - name: go vet
@@ -34,8 +38,8 @@ jobs:
   timing:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
+      - uses: actions/checkout@v6
+      - uses: actions/setup-go@v7
         with:
           go-version: stable
       - name: go test -tags=timing
@@ -46,8 +50,8 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
+      - uses: actions/checkout@v6
+      - uses: actions/setup-go@v7
         with:
           go-version: stable
       - name: coverage
@@ -60,8 +64,8 @@ jobs:
   golden:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
+      - uses: actions/checkout@v6
+      - uses: actions/setup-go@v7
         with:
           go-version: stable
       - name: characterization goldens are current
