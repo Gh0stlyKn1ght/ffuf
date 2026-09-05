@@ -1,6 +1,7 @@
 package input
 
 import (
+	"context"
 	"os"
 	"path/filepath"
 	"strings"
@@ -33,7 +34,9 @@ func TestWordlistAcceptsLinesLargerThanScannerDefault(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	config := ffuf.NewConfig(nil, nil)
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	config := ffuf.NewConfig(ctx, cancel)
 	input, err := NewWordlistInput("FUZZ", wordlist, &config)
 	if err != nil {
 		t.Fatalf("reading large wordlist entry: %v", err)
